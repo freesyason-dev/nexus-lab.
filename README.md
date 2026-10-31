@@ -1,11 +1,17 @@
-# NEXUS LAB 0.2 — Computational Core
-- Experimento Collatz con aritmética entera BigInt.
-- Rangos seleccionables hasta 250.000.
-- Límite de iteraciones por número.
-- Verificación independiente del máximo recorrido encontrado.
-- Historial local y exportación TXT.
+# NEXUS LAB 0.3 — Research
+## Nueva capacidad
+Búsqueda real de metadatos bibliográficos a través del endpoint público Crossref REST API (`/works`). No requiere clave API ni cuenta. La versión muestra título, autores, año, revista, DOI, recuento de citas y resumen cuando el registro lo incluye.
 
-Limitaciones: experimento finito; no demuestra la conjetura. No está conectado todavía a IA externa ni a fuentes científicas. El cálculo usa recursos del dispositivo.
+## Publicación desde Android
+1. Extrae este ZIP.
+2. Entra en la carpeta `nexus_lab_v0_3`.
+3. Abre el repositorio GitHub `nexus-lab`.
+4. Sustituye el archivo `index.html` de la raíz por el nuevo `index.html`.
+5. Pulsa Commit changes y espera a que GitHub Pages actualice la web.
 
-## Publicar
-En GitHub > repositorio nexus-lab, reemplaza `index.html` por este archivo y pulsa Commit changes. Mantén el archivo en la raíz. GitHub Pages publicará la actualización en unos minutos.
+## Limitaciones
+- Esta versión consulta metadatos, no descarga ni analiza automáticamente artículos completos.
+- Los resúmenes no están disponibles para todos los registros.
+- El historial se guarda en el almacenamiento local del navegador.
+- Si una red bloquea solicitudes entre sitios (CORS), hará falta un backend intermediario.
+- La búsqueda está sujeta a los límites de uso de Crossref; evita automatizar consultas masivas.
