@@ -1,79 +1,32 @@
 <!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1220">
-<title>NEXUS LAB — Investigación inteligente</title>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#091321"><title>NEXUS LAB 0.2</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1220;--panel:#111c2e;--line:#26364e;--muted:#9aabc2;--text:#edf4ff;--accent:#68d5c4}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#172b43 0,transparent 38%),var(--bg);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:980px;margin:auto;padding:24px 16px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
-.brand{font-weight:800;letter-spacing:.16em}.status{font-size:12px;color:var(--accent);border:1px solid #2c766f;padding:6px 10px;border-radius:30px}
-h1{font-size:clamp(30px,7vw,54px);line-height:1.04;margin:16px 0}p{color:var(--muted);line-height:1.6}
-.hero{padding:24px 0 30px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.16em;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0}
-.card{background:linear-gradient(145deg,#142239,#101a2b);border:1px solid var(--line);border-radius:16px;padding:17px}
-.card h3{margin:0 0 8px;font-size:15px}.card p{font-size:13px;margin:0}
-section.workspace{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:24px}
-label{display:block;font-weight:650;margin:14px 0 8px}textarea,input{width:100%;background:#0b1423;color:var(--text);border:1px solid #33445d;border-radius:11px;padding:13px;font:inherit}
-textarea{min-height:130px;resize:vertical}button{border:0;border-radius:11px;padding:13px 18px;background:var(--accent);color:#06201d;font-weight:800;font-size:15px;margin-top:14px;width:100%;cursor:pointer}
-button:disabled{opacity:.55;cursor:wait}.note{font-size:12px;color:var(--muted)}.output{display:none;margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
-.step{padding:12px;border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#0d1727}
-.step strong{display:block;margin-bottom:4px}.tag{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
-footer{margin-top:28px;color:var(--muted);font-size:12px;text-align:center}
-</style>
-</head>
-<body>
-<main>
-  <div class="top"><div class="brand">NEXUS <span style="color:var(--accent)">LAB</span></div><div class="status">PROTOTIPO 0.1</div></div>
-  <div class="hero">
-    <div class="eyebrow">PLATAFORMA DE INVESTIGACIÓN</div>
-    <h1>Investigar.<br>Experimentar.<br><span style="color:var(--accent)">Verificar.</span></h1>
-    <p>Un espacio para convertir preguntas complejas en investigaciones estructuradas, hipótesis comprobables y experimentos reproducibles.</p>
-  </div>
-  <div class="grid">
-    <div class="card"><h3>01 · RESEARCH</h3><p>Organización de fuentes y antecedentes científicos.</p></div>
-    <div class="card"><h3>02 · REASONING</h3><p>Descomposición del problema y formulación de hipótesis.</p></div>
-    <div class="card"><h3>03 · EXPERIMENT</h3><p>Diseño de pruebas, cálculos y simulaciones.</p></div>
-    <div class="card"><h3>04 · VERIFIER</h3><p>Revisión de evidencia, límites y reproducibilidad.</p></div>
-  </div>
-  <section class="workspace">
-    <div class="eyebrow">NUEVA INVESTIGACIÓN</div>
-    <h2 style="margin:8px 0">Define el problema</h2>
-    <p>Escribe una pregunta concreta. El prototipo organizará un plan inicial; todavía no consulta fuentes externas ni ejecuta modelos de IA.</p>
-    <label for="topic">Tema o pregunta de investigación</label>
-    <textarea id="topic" placeholder="Ejemplo: ¿Qué métodos de corrección de errores podrían reducir los requisitos de una computadora cuántica para ejecutar Shor contra curvas elípticas?"></textarea>
-    <label for="goal">Objetivo (opcional)</label>
-    <input id="goal" placeholder="Ej.: evaluar viabilidad, comparar métodos, diseñar simulación">
-    <button id="start">Crear plan de investigación</button>
-    <div class="output" id="output" aria-live="polite">
-      <div class="tag">Plan generado · borrador no verificado</div>
-      <h3 id="outTitle"></h3>
-      <div id="steps"></div>
-      <p class="note">Este plan es una estructura inicial generada localmente por el prototipo. No representa una búsqueda científica ni una conclusión validada.</p>
-    </div>
-  </section>
-  <footer>NEXUS LAB · Construcción inicial · Los resultados deben verificarse con fuentes y experimentos.</footer>
-</main>
-<script>
-const $ = id => document.getElementById(id);
-$("start").addEventListener("click",()=>{
-  const topic=$("topic").value.trim();
-  if(!topic){$("topic").focus();return}
-  $("start").disabled=true;$("start").textContent="Preparando...";
-  const goal=$("goal").value.trim();
-  $("outTitle").textContent=topic;
-  const items=[
-    ["Delimitar la pregunta","Definir términos, alcance, supuestos y qué resultado respondería la pregunta."],
-    ["Revisar antecedentes","Localizar publicaciones, documentación y resultados previos; registrar autor, fecha y enlace."],
-    ["Formular hipótesis","Escribir hipótesis comprobables y señalar qué evidencia podría refutarlas."],
-    ["Diseñar experimento","Definir variables, método, datos de entrada, controles y criterios de éxito."],
-    ["Verificar y documentar","Repetir pruebas, buscar explicaciones alternativas y separar hechos de incertidumbres."]
-  ];
-  $("steps").innerHTML=items.map((x,i)=>`<div class="step"><strong>${String(i+1).padStart(2,"0")} · ${x[0]}</strong><span class="note">${x[1]}</span></div>`).join("");
-  if(goal){$("steps").insertAdjacentHTML("afterbegin",`<p><b>Objetivo declarado:</b> ${goal.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</p>`)}
-  $("output").style.display="block";$("start").disabled=false;$("start").textContent="Crear otro plan";
-});
-</script>
-</body></html>
+:root{color-scheme:dark;--bg:#091321;--panel:#111f32;--line:#293d57;--txt:#edf4ff;--muted:#9aabc1;--mint:#67dfc5;--warn:#ffd27a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -15%,#1b3853 0,transparent 45%),var(--bg);color:var(--txt);font:15px system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:20px 15px 55px}.top{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0 17px}.logo{font-weight:900;letter-spacing:.16em}.logo span,.eyebrow,.num{color:var(--mint)}.pill{border:1px solid #28776d;color:var(--mint);border-radius:30px;padding:6px 10px;font-size:11px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.17em;margin-top:25px}h1{font-size:clamp(30px,7vw,48px);line-height:1.05;margin:12px 0}h2{font-size:21px;margin:0 0 12px}h3{font-size:15px;margin:0 0 7px}p{color:var(--muted);line-height:1.6}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin:22px 0}.card,.panel{background:linear-gradient(145deg,#111f32,#0d1929);border:1px solid var(--line);border-radius:15px;padding:16px}.card p{font-size:13px;margin:0}.num{font-size:23px;font-weight:800;margin-bottom:5px}.panel{margin-top:15px}.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}label{display:block;font-weight:650;margin:12px 0 7px}select{width:100%;background:#091523;color:var(--txt);border:1px solid #38506d;border-radius:10px;padding:12px;font:inherit}button{background:var(--mint);color:#06221c;border:0;border-radius:10px;padding:12px 16px;font-weight:850;cursor:pointer}.secondary{background:#1a2d44;color:var(--txt);border:1px solid #3a506b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.actions button{flex:1;min-width:140px}button:disabled{opacity:.5}.progress{height:8px;background:#07101c;border-radius:20px;overflow:hidden;margin-top:13px}.bar{height:100%;width:0;background:linear-gradient(90deg,#55bfae,#8af0d6)}.result{display:none;margin-top:15px}.metricgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px;margin:13px 0}.metric{background:#0a1726;border:1px solid var(--line);padding:12px;border-radius:11px}.metric b{display:block;font-size:21px;color:var(--mint)}.metric small{color:var(--muted)}.log{background:#07111e;border:1px solid var(--line);border-radius:10px;padding:12px;max-height:230px;overflow:auto;font:12px monospace;white-space:pre-wrap;color:#c8d8ec}.notice{border-left:3px solid var(--warn);padding:9px 12px;background:#211d16;color:#e8d7b2;border-radius:5px;font-size:12px;line-height:1.5}.historyitem{border-top:1px solid var(--line);padding:11px 0;font-size:13px}.historyitem span,.note{color:var(--muted)}.note{font-size:12px}footer{text-align:center;color:var(--muted);font-size:11px;margin:30px 0}
+</style></head><body><main>
+<header class="top"><div class="logo">NEXUS <span>LAB</span></div><div class="pill">CORE 0.2 · LOCAL COMPUTE</div></header>
+<div class="eyebrow">MOTOR COMPUTACIONAL · EXPERIMENTOS REPRODUCIBLES</div><h1>De la hipótesis<br>a la evidencia.</h1>
+<p>NEXUS CORE ejecuta pruebas matemáticas en tu navegador, registra parámetros y somete los resultados a una verificación independiente.</p>
+<div class="grid"><div class="card"><div class="num">01</div><h3>EXPERIMENT</h3><p>Ejecuta cálculos reales en JavaScript.</p></div><div class="card"><div class="num">02</div><h3>VERIFIER</h3><p>Recalcula resultados con una rutina separada.</p></div><div class="card"><div class="num">03</div><h3>MEMORY</h3><p>Guarda el historial en este navegador.</p></div></div>
+<section class="panel"><div class="eyebrow">EXPERIMENTO N.º 001</div><h2>Conjetura de Collatz</h2><p>Para cada entero positivo n: si es par, dividir entre 2; si es impar, calcular 3n + 1. La pregunta es si toda secuencia termina llegando a 1.</p>
+<div class="controls"><div><label for="limit">Examinar números desde 1 hasta</label><select id="limit"><option value="1000">1.000</option><option value="10000" selected>10.000</option><option value="50000">50.000</option><option value="100000">100.000</option><option value="250000">250.000</option></select></div><div><label for="maxsteps">Límite de pasos por número</label><select id="maxsteps"><option>1000</option><option selected>5000</option><option>20000</option></select></div></div>
+<div class="actions"><button id="run">Ejecutar experimento</button><button id="clear" class="secondary">Limpiar historial</button></div><div class="progress"><div class="bar" id="bar"></div></div><p id="status" class="note">Listo para ejecutar. El cálculo se realiza en tu dispositivo.</p>
+<div class="result" id="result"><div class="metricgrid"><div class="metric"><b id="tested">—</b><small>Números examinados</small></div><div class="metric"><b id="maxlen">—</b><small>Mayor número de pasos</small></div><div class="metric"><b id="recordn">—</b><small>Número con mayor recorrido</small></div><div class="metric"><b id="exceptions">—</b><small>Casos sin llegar a 1 en el límite</small></div></div>
+<div class="notice"><b>Interpretación:</b> un resultado sin excepciones solo describe el rango y los límites examinados. No demuestra que la conjetura sea cierta para todos los enteros positivos.</div><h3 style="margin-top:17px">Verificación independiente</h3><p id="verifyText">Pendiente</p><h3>Registro técnico</h3><div class="log" id="log"></div><div class="actions"><button class="secondary" id="export">Exportar informe .txt</button></div></div></section>
+<section class="panel"><div class="eyebrow">MEMORY · REGISTRO LOCAL</div><h2>Historial de experimentos</h2><div id="history"><p>Aún no hay experimentos guardados.</p></div><p class="note">El historial se conserva en este navegador. Si borras sus datos, puede desaparecer.</p></section><footer>NEXUS LAB · Prototipo computacional 0.2 · Sin conexión a IA externa todavía</footer>
+</main><script>
+const el=id=>document.getElementById(id);
+function collatz(n,cap){let x=BigInt(n),steps=0;while(x!==1n&&steps<cap){x=(x%2n===0n)?x/2n:3n*x+1n;steps++}return{steps,ended:x===1n}}
+function verify(n,expected,cap){let x=BigInt(n),s=0;while(x!==1n&&s<cap){if((x&1n)===0n)x=x/2n;else x=x*3n+1n;s++}return x===1n&&s===expected}
+let latest=null;
+function history(){let h=[];try{h=JSON.parse(localStorage.getItem("nexus_history")||"[]")}catch(e){}el("history").innerHTML=h.length?h.map(x=>`<div class="historyitem"><b>Collatz · hasta ${x.limit.toLocaleString("es-DO")}</b><br><span>${x.date} · máximo ${x.maxSteps} pasos · excepciones: ${x.exceptions} · verificación: ${x.verified?"correcta":"fallida"}</span></div>`).join(""):"<p>Aún no hay experimentos guardados.</p>"}
+el("run").onclick=()=>{let limit=+el("limit").value,cap=+el("maxsteps").value,n=1,maxSteps=-1,recordN=1,exceptions=0,samples=[];el("run").disabled=true;el("result").style.display="none";el("bar").style.width="0%";el("status").textContent="Calculando…";
+function chunk(){let end=Math.min(limit,n+999);for(;n<=end;n++){let r=collatz(n,cap);if(!r.ended){exceptions++;if(samples.length<10)samples.push(n)}if(r.steps>maxSteps){maxSteps=r.steps;recordN=n}}let pct=Math.floor((n-1)/limit*100);el("bar").style.width=pct+"%";el("status").textContent=`Procesados ${Math.min(n-1,limit).toLocaleString("es-DO")} de ${limit.toLocaleString("es-DO")} (${pct}%)`;if(n<=limit){setTimeout(chunk,0);return}
+let verified=verify(recordN,maxSteps,cap)&&collatz(recordN,cap).ended;latest={limit,cap,maxSteps,recordN,exceptions,verified,date:new Date().toLocaleString("es-DO")};
+el("tested").textContent=limit.toLocaleString("es-DO");el("maxlen").textContent=maxSteps.toLocaleString("es-DO");el("recordn").textContent=recordN.toLocaleString("es-DO");el("exceptions").textContent=exceptions.toLocaleString("es-DO");el("verifyText").textContent=verified?`Correcta: una segunda rutina reprodujo ${maxSteps} pasos para n = ${recordN} y confirmó que llega a 1.`:"La verificación independiente no coincidió. No aceptes este resultado.";
+el("log").textContent=["NEXUS CORE / EXPERIMENT 001","Conjetura: Collatz","Rango: 1.."+limit,"Límite de pasos por número: "+cap,"Números examinados: "+limit,"Mayor longitud de recorrido: "+maxSteps,"Número asociado: "+recordN,"Casos que no llegaron a 1 dentro del límite: "+exceptions,"Muestras: "+(samples.join(", ")||"ninguna"),"Verificación independiente: "+(verified?"PASS":"FAIL"),"Método: aritmética entera BigInt; recorrido iterativo; segunda rutina de verificación.","Advertencia: experimento finito, no constituye demostración general."].join("\\n");
+el("result").style.display="block";el("status").textContent="Experimento terminado.";el("run").disabled=false;let h=[];try{h=JSON.parse(localStorage.getItem("nexus_history")||"[]")}catch(e){}h.unshift(latest);localStorage.setItem("nexus_history",JSON.stringify(h.slice(0,20)));history()}chunk()};
+el("clear").onclick=()=>{if(confirm("¿Borrar el historial guardado en este navegador?")){localStorage.removeItem("nexus_history");history()}};
+el("export").onclick=()=>{if(!latest)return;let b=new Blob([el("log").textContent+"\\nFecha: "+latest.date],{type:"text/plain"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="NEXUS-001-informe.txt";a.click();URL.revokeObjectURL(a.href)};
+history();
+</script></body></html>
